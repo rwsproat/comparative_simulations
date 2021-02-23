@@ -1,0 +1,21 @@
+https://github.com/rwsproat/comparative_simulations
+
+The code and data in this directory starts with the randomly generated roots for
+each language (see data/random_roots_*.tsv) and the "Swadesh" lists (see
+data/swadesh_*_*.tsv) and estimates the probability of finding the number of
+matches in the Swadesh list, given two languages that have the phonotactics
+exhibited in the random roots.
+
+See scripts/generate_random_cognate_lists.sh for how to run this.
+
+This depends on having installed:
+
+1) OpenFst: http://www.openfst.org/twiki/bin/view/FST/WebHome
+
+   Be sure to configure with the --enable_grm option
+
+2) Pynini: http://www.openfst.org/twiki/bin/view/GRM/Pynini
+
+
+Note that the previous phase --- generating the random lists of roots from
+actual data, requires additional installations.

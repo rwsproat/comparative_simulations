@@ -1,0 +1,25 @@
+In addition to OpenFst and Pynini, this also depends on:
+
+OpenGrm ngram: http://www.openfst.org/twiki/bin/view/GRM/NGramLibrary
+OpenGrm Thrax: http://www.openfst.org/twiki/bin/view/GRM/Thrax
+
+In each of the subdirectories
+
+gk
+pan
+pie
+pb
+skt
+
+there is a script
+
+make_roots_lm.sh
+
+that will build a LM from the initial list of roots, and then generate a million
+root TOKENS, which are then uniqued with their counts.
+
+Run the script in the directory.
+
+These lists of phonotactically reasonable roots are used in the main simulation
+code already distributed.
+

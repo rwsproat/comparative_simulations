@@ -1,0 +1,17 @@
+The files named grouping_* correspond to the different conditions in Blevins &
+Sproat in Tables 3a/8a.
+
+Files with the following prefixes correspond to the following row labels:
+
+grouping_S100+LJ			Intersection of Swadesh 100 & Leipzig-Jakarta
+grouping_S207+LJ			Intersection of Swadesh 207 & Leipzig-Jakarta
+grouping_S100				Swadesh 100
+grouping_LJ    		 	  	Leipzig-Jakarta
+grouping_S207				Swadesh 207
+grouping_Union				Union of Swadesh 207 & Leipzig-Jakarta
+
+Files with the following suffixes correspond to the following column labels:
+
+.tsv  	       		 	  	# of PIE/PB cognate sets
+_no_lumping.tsv		 		# of PIE/PB cognates w/o semantic lumping
+_neither.tsv			     	# of cognates w/o lumping and w/o new PB forms

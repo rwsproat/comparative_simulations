@@ -1,0 +1,82 @@
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+import '../common/byte.grm' as b;
+
+## iephonemes.tsv contains the map between basic classes and phonemes
+
+classes = StringFile['iephonemes.tsv'];
+
+## Union with the output of the above to allow composition with the files from
+## Kuemmel (below)
+
+classes1 = classes | Project[classes, 'output'];
+
+## Insert spaces between phonemes for LM purposes
+
+class_star = classes1 (("" : " ") classes1)*;
+
+## Limit nasal onsets
+
+nasal_onsets =
+  ("m" | "n") ("l" | "r")? ("e" "R?" "C")
+;
+
+## Root patterns, following Fortson
+
+roots = "CeC" | "CReC" | "CeRC" | "CReRC";
+
+sroots =
+  "s" ("PeC" | "PReC" | "PeRC" | "PReRC" | nasal_onsets)
+;
+
+sigstar = b.kBytes*;
+labial = "p" | "b";
+nonlabial =
+   "t"
+  |"k̑"
+  |"k"
+  |"d"
+  |"g̑"
+  |"g"
+  |"s"
+;
+
+## Nasal assimilation
+
+nasal_adjust =
+    CDRewrite["n" : "m", "", " " labial, sigstar]
+ @  CDRewrite["m" : "n", "", " " nonlabial, sigstar]
+;
+
+## Final root to phoneme map
+
+final_roots = Optimize[
+  Project[(roots | sroots) @ class_star @ nasal_adjust, 'output']]
+;
+
+## Fold in the 3g model trained on kuemmel_roots.txt
+
+syms = SymbolTable['kuemmel_roots.syms'];
+
+map = StringFile['lm_map.tsv', syms, 'byte'];
+
+mapper = map (("" : " ") map)*;
+
+lm = LoadFst['lm_nosyms.fst'];
+
+## Weighted roots
+
+enforce_spacing =  b.kNotSpace+ (" " b.kNotSpace+)*;
+
+wroots = Optimize[lm @ mapper @ final_roots @ enforce_spacing];
+
+export WROOTS_LM = Optimize[wroots];
