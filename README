@@ -1,5 +1,15 @@
 https://github.com/rwsproat/comparative_simulations
 
+Code for to the simulations reported in 
+
+Blevins, Juliette and Sproat, Richard. 2021.
+"Statistical Evidence for the Proto-Indo-European-Euskarian Hypothesis: 
+A word-list approach integrating phonotactics." Diachronica. Published 
+online, 06 May, https://benjamins.com/catalog/dia.19014.ble.
+
+This version corresponds to the code that was used for the results reported in the paper. Any 
+updates will be made to a cloned version, location TBD.
+
 The code and data in this directory starts with the randomly generated roots for
 each language (see data/random_roots_*.tsv) and the "Swadesh" lists (see
 data/swadesh_*_*.tsv) and estimates the probability of finding the number of
